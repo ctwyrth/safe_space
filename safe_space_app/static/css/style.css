@@ -1,0 +1,64 @@
+.bg-salmon {
+   background-color: #E99497;
+}
+
+.bg-lightsalmon {
+   background-color: #ebaeb0;
+}
+
+.bg-sunset {
+   background-color: #F3C583;
+}
+
+.bg-sunrise {
+   background-color: #E8E46E;
+}
+
+.bg-grass {
+   background-color: #B3E283;
+}
+
+.text-salmon {
+   color: #E99497;
+}
+
+.text-sunset {
+   color: #F3C583;
+}
+
+.text-sunrise {
+   color: #E8E46E;
+}
+
+.text-grass {
+   color: #B3E283;
+}
+
+.btn-salmon {
+   background-color: #E99497;
+   border-color: #E99497;
+   color: white;
+}
+
+.btn-sunset {
+   background-color: #F3C583;
+   border-color: #F3C583;
+   color: white;
+}
+
+.btn-sunrise {
+   background-color: #E8E46E;
+   border-color: #E8E46E;
+   color: white;
+}
+
+.btn-grass {
+   background-color: #B3E283;
+   border-color: #B3E283;
+   color: white;
+}
+
+.nav-shadow {
+   box-shadow: 0 2px 3px rgba(0,0,0,.75);
+   z-index: 2;
+}

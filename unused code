@@ -1,0 +1,76 @@
+<!-- from index -- login/registration components -->
+<div class="col-6 py-4 ps-5 pe-2">
+   <form action="/register/user" method="POST" class="bg-secondary p-4 rounded-3">
+      <h3>Registration:</h3>
+      <div class="mb-3">
+         <label for="fname" class="form-label">First Name:</label>
+         <input type="text" name="fname" id="fname" class="form-control">
+      </div>
+      {% for message in get_flashed_messages(category_filter['error_firstname']) %}
+         <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show" role="alert">
+               <p>{{ message }}</p>
+               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+      {% endwith %}
+      <div class="mb-3">
+         <label for="lname" class="form-label">Last Name:</label>
+         <input type="text" name="lname" id="lname" class="form-control">
+      </div>
+      {% for message in get_flashed_messages(category_filter['error_lastname']) %}
+         <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show" role="alert">
+               <p>{{ message }}</p>
+               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+      {% endwith %}
+      <div class="mb-3">
+         <label for="email" class="form-label">Email:</label>
+         <input type="email" name="email" id="email" class="form-control">
+      </div>
+      {% for message in get_flashed_messages(category_filter['error_email']) %}
+         <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show" role="alert">
+               <p>{{ message }}</p>
+               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+      {% endwith %}
+      <div class="mb-3">
+         <label for="password" class="form-label">Password:</label>
+         <input type="password" name="password" id="password" class="form-control">
+      </div>
+      {% for message in get_flashed_messages(category_filter['error_password']) %}
+         <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show" role="alert">
+               <p>{{ message }}</p>
+               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+      {% endwith %}
+      <div class="mb-3">
+         <label for="password1" class="form-label">Re-Enter Password:</label>
+         <input type="password" name="password1" id="password" class="form-control">
+      </div>
+      {% for message in get_flashed_messages(category_filter['error_password']) %}
+         <div class="alert alert-danger alert-dismissible d-flex align-items-center fade show" role="alert">
+               <p>{{ message }}</p>
+               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+      {% endwith %}
+      <div class="row p-4">
+         <input type="submit" value="Register" class="btn btn-info">
+      </div>
+   </form>
+</div>
+
+<div class="col-6 py-4 ps-5 pe-2">
+   <form action="/login_check" method="POST" class="p-4 rounded-3" style="background-color: lightgray;">
+      <h3>Log In:</h3>
+      <div class="mb-3">
+         <label for="email" class="form-label">Email:</label>
+         <input type="text" name="email" id="email" class="form-control">
+      </div>
+      <div class="mb-3">
+         <label for="password" class="form-label">Password:</label>
+         <input type="password" name="password" id="password" class="form-control">
+      </div>
+      <div class="row p-4">
+         <input type="submit" value="Log In" class="btn btn-primary">
+      </div>
+   </form>
+</div>
