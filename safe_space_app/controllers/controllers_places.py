@@ -2,9 +2,9 @@ from safe_space_app import app
 from flask import render_template, redirect, request, session
 from safe_space_app.models.places import Place
 
-@app.route('/new_place')
+@app.route('/add_place')
 def new_place():
-    return render_template('/new_place.html')
+    return render_template('/add_place.html')
 
 @app.route('/create_place', methods=['POST'])
 def create_place():

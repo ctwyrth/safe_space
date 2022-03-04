@@ -1,5 +1,6 @@
+from array import array
 from safe_space_app import app
-from flask import render_template, redirect, request, session
+from flask import render_template, redirect, request, session, jsonify
 from safe_space_app.models.users import User
 from flask_bcrypt import Bcrypt
 from flask import flash
@@ -8,12 +9,16 @@ bcrypt = Bcrypt(app)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('/index.html')
+
+@app.route('/register')
+def register():
+    return render_template('/register.html')
 
 @app.route('/create_user', methods=['POST'])
 def create_user():
     if not User.validate_user(request.form):
-        return redirect('/')
+        return redirect('/register')
     pw_hash = bcrypt.generate_password_hash(request.form['password'])
     print(pw_hash)
     data = {
@@ -30,38 +35,43 @@ def create_user():
 
 @app.route('/login', methods=['POST'])
 def login():
-    if not User.validate_login(request.form):
-        return redirect('/')
+    valid = User.validate_login(request.form)
+    if valid['check'] != 'passed':
+        print('Failure has redirected you back to the front page.')
+        return jsonify(valid)
+    print('Validation has succeeded.')
     data = {
         'email': request.form['email']
     }
     users_in_db = User.get_by_email(data)
     if not users_in_db:
+        print('The email check failed.')
         flash('No such email exists in our records.', 'error_email_login')
         return redirect('/')
     else:
+        print('The email check succeeded.')
         user_in_db = users_in_db[0]
     if not bcrypt.check_password_hash(user_in_db['password'], request.form['password']):
+        print('The password check failed.')
         flash('The password you entered does not match the username you provided.', 'error_password_login')
         return redirect('/')
     session['user_id'] = user_in_db['id']
     session['fname'] = user_in_db['first_name']
     session['lname'] = user_in_db['last_name']
+    print(session['user_id'], session['fname'], session['lname'])
     return redirect('/dashboard')
 
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' not in session:
         return redirect('/')
-    PLACEHOLDER = PLACEHOLDER.show_all_PLACEHOLDER()
-    for PLACEHOLDER in PLACEHOLDER:
-        print(type(PLACEHOLDER))
-    return render_template('/dashboard.html', PLACEHOLDER = PLACEHOLDER)
+    print('We have reached the promised land!')
+    return render_template("/dashboard.html")
 
 # MAY NOT BE NEEDED FOR BELT PROJECT -------------------------------------------------
 @app.route('/show_users')
 def show_all_users():
-    return render_template('/results', users = User.show_all())
+    return render_template('/results.html', users = User.show_all())
 
 @app.route('/show_user/<int:id>')
 def show_user(id):

@@ -2,7 +2,7 @@ from safe_space_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 import re
 
-DB = 'project_database_name'
+DB = 'safe_spaces'
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 PASSWORD_REGEX = re.compile(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[*.!@$%^&(){}[\]:;<>,.?/~_+-=|]).{8,32}$')  # password info pop up or explanation: Must be 8-32 characters long and contain: -1 upper case letter, -1 lower case letter, -1 number, -1 special characters (?!@$%&*-_)
@@ -114,20 +114,29 @@ class User:
 
     @staticmethod
     def validate_login(login):
+        print('The validation is running.')
+        err_return = {}
         is_valid = True
         if not login['email']:
+            err_return['error_email'] = 'This is a required field.'
             flash('This is a required field', 'error_email_login')
             is_valid = False
         elif not EMAIL_REGEX.match(login['email']):
+            err_return['error_email'] = 'That is not a valid email address.'
             flash('This is not a valid email address', 'error_email_login')
             is_valid = False
         if not login['password']:
+            err_return['error_password'] = 'This is a required field.'
             flash('This is a required field.', 'error_password_login')
             is_valid = False
         elif not PASSWORD_REGEX.match(login['password']):
+            err_return['error_password'] = 'That is not a valid password.'
             flash('Must be 8-32 characters long, contain 1 upper and lower case letter, 1 number, and 1 special character.' 'error_password_login')
             is_valid = False
-        return is_valid
+        if is_valid == True:
+            err_return['check'] = 'passed';
+        print(err_return)
+        return err_return
 
     @staticmethod
     def validate_user_update(user):

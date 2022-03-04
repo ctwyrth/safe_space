@@ -2,7 +2,7 @@ from safe_space_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 
 
-DB = 'project_database_name'
+DB = 'safe_spaces'
 
 class Event:
     def __init__(self, data):
