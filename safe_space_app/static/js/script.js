@@ -25,52 +25,74 @@ function register() {
 function set_login() {
    const lr_bar = document.getElementById('login_reg');
    
-   lr_bar.innerHTML = '<form id="login" action="/login" method="POST"><div class="input-group"><input type="text" name="email" id="email" class="form-control" placeholder="Email" aria-label="Email"><input type="password" name="password" id="password" class="form-control" placeholder="Password" aria-label="Password"><input type="submit" value="Log In" class="btn btn-grass border-0"></div></form>';
+   lr_bar.innerHTML = '<form id="login" action="/login" method="POST"><div class="input-group" id="input-group1"><input type="text" name="email" id="email" class="form-control" placeholder="Email" aria-label="Email"><input type="password" name="password" id="password" class="form-control" placeholder="Password" aria-label="Password"><input type="submit" value="Log In" class="btn btn-grass border-0"></div></form><div class="d-flex align-items-center justify-content-left" id="valid_test"></div>';
 
    const user_login = document.getElementById('login');
    user_login.onsubmit = function(e) {
       e.preventDefault();
+      alert('Running Javascript, running function!')
       console.log('The submit was interrupted!')
       let form = new FormData(user_login);
       fetch('http:///127.0.0.1:5000/login', { method: 'POST', body: form })
          .then ( response => response.json() )
          .then ( data => {
             console.log(data);
-            let new_html_str = '<form id="login" action="/login" method="POST" class="needs-validation" novalidate><div class="input-group has-validation">';
-            let error_str = '<div class="d-flex align-items-center justify-content-left">';
+            if (data['check'] == 'passed') {
+               window.location.replace('/dashboard');
+            }
+            document.getElementById('login').classList.add('needs-validation');
+            document.getElementById('login').setAttribute('novalidate', "");
+            document.getElementById('input-group1').classList.add('has-validation');
+            let error_str = '';
             if (data['error_email']) {
                console.log('There was an email error.');
-               new_html_str += '<input type="text" name="email" id="email" class="form-control is-invalid" aria-label="Email" aria-describedby="validationEmail">';
+               document.getElementById('email').classList.add('is-invalid');
+               document.getElementById('email').setAttribute('aria-describedby', 'validationEmail');
                error_str += '<div id="validationEmail" class="invalid-feedback" style="display: block; width: 42%;">' + data['error_email'] + '</div>';
-            } else {
-               new_html_str += '<input type="text" name="email" id="email" class="form-control" placeholder="Email"></input>';
             }
             if (data['error_password']) {
                console.log('There was a password error.');
-               new_html_str += '<input type="password" name="password" id="password" class="form-control is-invalid" aria-label="Password" aria-describedby="validationEmail">';
+               document.getElementById('password').classList.add('is-invalid');
+               document.getElementById('password').setAttribute('aria-describedby', 'validationPassword');
                error_str += '<div id="validationEmail" class="invalid-feedback" style="display: block; width: 42%">' + data['error_password'] + '</div>';
-            } else {
-               new_html_str += '<input type="password" name="password" id="password" class="form-control" placeholder="Password">';
             }
-            new_html_str += '<input type="submit" value="Log In" class="btn btn-grass border-0"></div></form>';
-            error_str += '</div>';
-            console.log(new_html_str);
-            lr_bar.innerHTML = new_html_str + error_str;
+            // error_str += '';
+            document.getElementById('valid_test').innerHTML = error_str;
          })
          .catch( (err) => console.log(err) )
    }
 }
 
-const map_search = document.getElementById('map-search-form');
-map_search.onsubmit = function(e) {
-   e.preventDefault();
-   let map_form = new FormData(map_search);
-   fetch('http://127.0.0.1:5000/map_search', { method: 'POST', body: form })
-      .then ( response => response.json() )
-      .then ( data => {
-         pass
-      })
-}
+// const map_search = document.getElementById('map-search-form');
+// map_search.onsubmit = function(e) {
+//    e.preventDefault();
+//    let map_form = new FormData(map_search);
+//    fetch('http://127.0.0.1:5000/map_search', { method: 'POST', body: map_form })
+//       .then ( response => response.json() )
+//       .then ( data => {
+//          var search = new mapkit.Search({
+//             language: "en-GB",
+//             getsUserLocation: true,
+//             region: map.region,
+//             limitToCountries: us, ca
+//          });
+
+//          search.search(data['map_search'], function(error, data) {
+//          if (error) {
+//              // Handle search error
+//             return;
+//          }
+//          var annotations = data.places.map(function(place) {
+//             var annotation = new mapkit.MarkerAnnotation(place.coordinate);
+//             annotation.title = place.name;
+//             annotation.subtitle = place.formattedAddress;
+//             annotation.color = "#9B6134";
+//             return annotation;
+//          });
+//          map.showItems(annotations);
+//      });
+//       })
+// }
 
 
 

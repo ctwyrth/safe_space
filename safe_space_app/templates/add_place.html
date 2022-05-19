@@ -60,7 +60,7 @@
             <div class="col-6 mt-4">
                 <form action="/map_search" method="POST" id="map-search-form">
                     <div class="input-group">
-                        <span for="map_search" class="input-group-text">MAP</span>
+                        <span for="map_search" class="input-group-text bg-sunset">MAP</span>
                         <input type="text" name="map_serach" id="map-search" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="map-search-btn">
                         <input type="submit" value="Search" class="btn btn-sm btn-sunrise" id="map-search-btn">
                     </div>
@@ -79,17 +79,18 @@
         mapkit.init({
             authorizationCallback: function(done) {
                 done(tokenID);
-            }
+            },
+            language: 'en'
         });
 
-        var map = new mapkit.Map("map");
-
-        var search = new mapkit.Search({
-            language: "en-GB",
-            getsUserLocation: true,
-            region: map.region,
-            limitToCountries: us, ca
+        var MarkerAnnotation = mapkit.MarkerAnnotation
+        var center = new mapkit.Coordinate(39.999733, -98.678503)
+        
+        var map = new mapkit.Map("map", {
+            center
         });
+
+        map.country = usa;
     </script>
 </body>
 </html>

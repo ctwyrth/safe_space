@@ -36,7 +36,7 @@ def create_user():
 @app.route('/login', methods=['POST'])
 def login():
     valid = User.validate_login(request.form)
-    if valid['check'] != 'passed':
+    if not 'check' in valid:
         print('Failure has redirected you back to the front page.')
         return jsonify(valid)
     print('Validation has succeeded.')
@@ -59,14 +59,14 @@ def login():
     session['fname'] = user_in_db['first_name']
     session['lname'] = user_in_db['last_name']
     print(session['user_id'], session['fname'], session['lname'])
-    return redirect('/dashboard')
+    return jsonify(valid)
 
 @app.route('/dashboard')
 def dashboard():
     if 'user_id' not in session:
         return redirect('/')
     print('We have reached the promised land!')
-    return render_template("/dashboard.html")
+    return render_template("dashboard.html")
 
 # MAY NOT BE NEEDED FOR BELT PROJECT -------------------------------------------------
 @app.route('/show_users')
