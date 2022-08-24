@@ -4,51 +4,51 @@ from safe_space_app.models.events import Event
 
 @app.route('/new_event')
 def new_event():
-    return render_template('/new_event.html')
+   return render_template('/new_event.html')
 
 @app.route('/create_event', methods=['POST'])
 def create_event():
-    if not Event.validate_projectName(request.form):
-        return redirect('/?form_route?')
-    data = {
-        'xx': request.form['xx'],
-        'xx': request.form['xx']
-    }
-    Event.save_event(data)
-    return redirect('/show')
+   if not Event.validate_projectName(request.form):
+      return redirect('/?form_route?')
+   data = {
+      'xx': request.form['xx'],
+      'xx': request.form['xx']
+   }
+   Event.save_event(data)
+   return redirect('/show')
 
 @app.route('/show_event/<int:id>')
 def show_event(id):
-    data = {
-        'id': id
-    }
-    return render_template("/details.html", event = Event.show(data))
+   data = {
+      'id': id
+   }
+   return render_template("/details.html", event = Event.show(data))
 
 @app.route('/edit_event/<int:id>')
 def edit_event(id):
-    data = {
-        'id': id
-    }
-    return render_template("edit.html", event = Event.show(data))
+   data = {
+      'id': id
+   }
+   return render_template("edit.html", event = Event.show(data))
 
 @app.route('/update_event/<int:id>', methods=['POST']) 
 def update_event(id):
-    if not Event.validate_event(request.form):
-        return redirect(f'/edit_event/{id}')
-    data = {
-        'id': id,
-        "xx":request.form['xx'],
-    }
-    Event.update(data)
-    return redirect(f"/show/{id}")
+   if not Event.validate_event(request.form):
+      return redirect(f'/edit_event/{id}')
+   data = {
+      'id': id,
+      'xx':request.form['xx'],
+   }
+   Event.update(data)
+   return redirect(f"/show/{id}")
 
 @app.route('/delete_event/<int:id>') 
 def delete_event(id):
-    data = {
-        'id': id,
-    }
-    Event.delete(data)
-    return redirect('/show')
+   data = {
+      'id': id,
+   }
+   Event.delete(data)
+   return redirect('/show')
 
 # Possible routes for multijoin element
 # @app.route('/PLACEHOLDER', methods=['POST'])

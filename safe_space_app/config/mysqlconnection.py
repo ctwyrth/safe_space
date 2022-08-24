@@ -1,9 +1,8 @@
 import pymysql.cursors
-
 class MySQLConnection:
-    def __init__(self, db):
+   def __init__(self, db):
 
-        connection = pymysql.connect(host = 'localhost',
+      connection = pymysql.connect(host = 'localhost',
                                     user = 'root',
                                     password = 'rootroot',
                                     db = db,
@@ -11,30 +10,30 @@ class MySQLConnection:
                                     cursorclass = pymysql.cursors.DictCursor,
                                     autocommit = True)
 
-        self.connection = connection
+      self.connection = connection
 
-    def query_db(self, query, data = None):
-        with self.connection.cursor() as cursor:
-            try:
-                query = cursor.mogrify(query, data)
-                print("Running Query:", query)
-                cursor.execute(query, data)
+   def query_db(self, query, data = None):
+      with self.connection.cursor() as cursor:
+         try:
+            query = cursor.mogrify(query, data)
+            print("Running Query:", query)
+            cursor.execute(query, data)
 
-                if query.lower().find("insert") >= 0:
-                    self.connection.commit()
-                    return cursor.lastrowid
-                elif query.lower().find("select") >= 0:
-                    result = cursor.fetchall()
-                    return result
-                else:
-                    self.connection.commit()
+            if query.lower().find("insert") >= 0:
+               self.connection.commit()
+               return cursor.lastrowid
+            elif query.lower().find("select") >= 0:
+               result = cursor.fetchall()
+               return result
+            else:
+               self.connection.commit()
 
-            except Exception as e:
-                print("Something went wrong", e)
-                return False
+         except Exception as e:
+            print("Something went wrong", e)
+            return False
 
-            finally:
-                self.connection.close()
+         finally:
+            self.connection.close()
 
-def connectToMySQL(db):
-    return MySQLConnection(db)
+   def connectToMySQL(db):
+      return MySQLConnection(db)

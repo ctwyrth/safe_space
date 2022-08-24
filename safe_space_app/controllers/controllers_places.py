@@ -4,51 +4,51 @@ from safe_space_app.models.places import Place
 
 @app.route('/add_place')
 def new_place():
-    return render_template('/add_place.html')
+   return render_template('/add_place.html')
 
 @app.route('/create_place', methods=['POST'])
 def create_place():
-    if not Place.validate_projectName(request.form):
-        return redirect('/?form_route?')
-    data = {
-        'xx': request.form['xx'],
-        'xx': request.form['xx']
-    }
-    Place.save_place(data)
-    return redirect('/show')
+   if not Place.validate_projectName(request.form):
+      return redirect('/?form_route?')
+   data = {
+      'xx': request.form['xx'],
+      'xx': request.form['xx']
+   }
+   Place.save_place(data)
+   return redirect('/show')
 
 @app.route('/show_place/<int:id>')
 def show_place(id):
-    data = {
-        'id': id
-    }
-    return render_template("/details.html", place = Place.show(data))
+   data = {
+      'id': id
+   }
+   return render_template("/details.html", place = Place.show(data))
 
 @app.route('/edit_place/<int:id>')
 def edit_place(id):
-    data = {
-        'id': id
-    }
-    return render_template("edit.html", place = Place.show(data))
+   data = {
+      'id': id
+   }
+   return render_template("edit.html", place = Place.show(data))
 
 @app.route('/update_place/<int:id>', methods=['POST']) 
 def update_place(id):
-    if not Place.validate_place(request.form):
-        return redirect(f'/edit_place/{id}')
-    data = {
-        'id': id,
-        "xx":request.form['xx'],
-    }
-    Place.update(data)
-    return redirect(f"/show/{id}")
+   if not Place.validate_place(request.form):
+      return redirect(f'/edit_place/{id}')
+   data = {
+      'id': id,
+      "xx":request.form['xx'],
+   }
+   Place.update(data)
+   return redirect(f"/show/{id}")
 
 @app.route('/delete_place/<int:id>') 
 def delete_place(id):
-    data = {
-        'id': id,
-    }
-    Place.delete(data)
-    return redirect('/show')
+   data = {
+      'id': id,
+   }
+   Place.delete(data)
+   return redirect('/show')
 
 # Possible routes for multijoin element
 # @app.route('/PLACEHOLDER', methods=['POST'])
