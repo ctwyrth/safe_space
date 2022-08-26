@@ -131,7 +131,7 @@ class User:
          is_valid = False
       elif not PASSWORD_REGEX.match(login['password']):
          err_return['error_password'] = 'That is not a valid password.'
-         flash('Must be 8-32 characters long, contain 1 upper and lower case letter, 1 number, and 1 specialcharacter.' 'error_password_login')
+         flash('Must be 8-32 characters long, contain 1 upper and lower case letter, 1 number, and 1 special character.' 'error_password_login')
          is_valid = False
       if is_valid == True:
          err_return['check'] = 'passed';

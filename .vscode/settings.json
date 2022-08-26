@@ -1,6 +1,10 @@
 {
    "cSpell.words": [
+      "cursorclass",
       "firstname",
-      "lastname"
+      "jsonify",
+      "lastname",
+      "mogrify",
+      "pymysql"
    ]
 }
